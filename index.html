@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    	<title>Horloĝo</title>
+    	<meta name="description" content="Horloĝo is a text based clock in Esperanto" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext" rel="stylesheet">
+        <link href="favicon.ico" rel="icon" type="image/x-icon" />
+        <style>
+    	    html, body {
+    	        margin: 0px;
+    	        padding: 0px;
+                height: 100%;
+    	        background-color: black;
+    	        color: white;
+    	        font-family: "helvetica", "Times New Roman";
+            }
+            footer {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background-color: #009900;
+                color: white;
+                text-align: center;
+                font-size: 0.8em;
+            }
+            .centro {
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+                margin: 0px auto;
+                height: 100%;
+                vertical-align: middle;
+                align-content: center;
+                justify-content: center;
+                font-family: 'Lato', sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+    	<div class="centro">
+	        <b style="font-size:7em;" id="horoj">HH</b> 
+            <span style="font-size:5em;" id="minutoj">MM</span>
+            <i style="font-size:2em;" id="sekundoj"></i>
+            <br />
+            <i style="font-size:1.5em;"  id="tagxo"></i>
+            <i style="font-size:1em;"  id="dato"></i>
+    	</div>
+    
+    	<footer id="footer">
+    	    <button id="close" style="float: right; margin: 3px; vertical-align: middle;" onClick="document.getElementById('footer').style.display='none'"> Fermi </button>
+    		<p style="padding: 0px; margin: 5px;"> ★ Programita per <a target="_blank" href="https://twitter.com/superlandero" style="color: white;">Carlos Landero</a>, 2019 ★</p>
+    	</footer>
+    	<script type="text/javascript">
+            var thoroj = ['', 'unu', 'du', 'tri', 'kvar', 'kvin', 'ses', 'sep', 'ok', 'naŭ', 'dek'];
+            var tday=["lundo","mardo","merkredo","ĵaŭdo","vendredo","sabato", "dimanĉo"];
+            var tmonth=["Januaro","Februaro","Marto","Aprilo","Majo","Junio","Julio","Aŭgusto","Septembro","Oktobro","Novembro","Decembro"];
+            
+            function capitalizeFirstLetter(string)
+            {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+            function numero_a_teksto(num){
+                teksto = '';
+                var cadeSifra = (''+num).split("");
+                teksto = cadeSifra.length ? thoroj[+cadeSifra.pop()]+teksto             : teksto;
+                if (cadeSifra.length){
+                    let x = +cadeSifra.pop();
+                    teksto = (x > 1 ? thoroj[x] : '') + 'dek '+teksto;
+                }
+                if (cadeSifra.length){
+                    let x = +cadeSifra.pop();
+                    teksto = (x > 1 ? thoroj[x] : '') + 'cent '+teksto;
+                }
+                if (cadeSifra.length){
+                    let x = +cadeSifra.pop();
+                    teksto = (x > 1 ? thoroj[x] : '') + 'mil '+teksto;
+                }
+                return capitalizeFirstLetter(teksto);
+            }            
+            function temporizilo()
+            {
+                var d = new Date();
+                var nday=d.getDay(),nmonth=d.getMonth(),ndate=d.getDate(),nyear=d.getFullYear();
+                var nhour=d.getHours(),nmin=d.getMinutes(),nsec=d.getSeconds(),ap;
+                
+                //if(nhour==0){nhour=24;}
+                document.getElementById('horoj').innerHTML = nhour==0 ? 'Nul\'': numero_a_teksto(nhour);
+                document.getElementById('minutoj').innerHTML = numero_a_teksto(nmin);
+                document.getElementById('sekundoj').innerHTML = numero_a_teksto(nsec)+(nsec > 1 ? ' sekundoj': nsec == 0 ? 'nul\' sekundoj' : ' sekundo');
+                document.getElementById('tagxo').innerHTML = capitalizeFirstLetter(tday[nday-1])+' '+ndate+'a';
+                document.getElementById('dato').innerHTML = tmonth[nmonth]+', '+nyear;
+            }
+            
+            temporizilo();
+            setInterval(temporizilo, 1000);
+        </script>
+    </body>
+</html>
