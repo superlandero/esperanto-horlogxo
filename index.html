@@ -37,16 +37,67 @@
                 justify-content: center;
                 font-family: 'Lato', sans-serif;
             }
+            
+            #horoj { font-size:13em; } 
+            #minutoj { font-size:11em; } 
+            #sekundoj { font-size:6em; } 
+            #tagxo { font-size:4em; } 
+            #dato { font-size:3em; } 
+            /**
+             * Basic CSS Media Query Template
+             * TODO: I should probably use Sass...
+             * Author: Michael Vieth
+             * ------------------------------------------
+             *  Responsive Grid Media Queries - 1280, 1024, 768, 480
+             *   1280-1024   - desktop (default grid)
+             *   1024-768    - tablet landscape
+             *   768-480     - tablet 
+             *   480-less    - phone landscape & smaller
+             * --------------------------------------------
+             */
+            @media all and (min-width: 1024px) and (max-width: 1280px) {
+                #horoj { font-size:12em; } 
+                #minutoj { font-size:9em; } 
+                #sekundoj { font-size:4.5em; } 
+                #tagxo { font-size:3em; } 
+                #dato { font-size:2.5em; } 
+            }
+            
+            @media all and (min-width: 768px) and (max-width: 1024px) {
+                #horoj { font-size:10em; } 
+                #minutoj { font-size:7em; } 
+                #sekundoj { font-size:3em; } 
+                #tagxo { font-size:2em; } 
+                #dato { font-size:1.75em; } 
+            }
+            
+            @media all and (min-width: 480px) and (max-width: 768px) {
+                #horoj { font-size:7em; } 
+                #minutoj { font-size:5em; } 
+                #sekundoj { font-size:2em; } 
+                #tagxo { font-size:1.5em; } 
+                #dato { font-size:1.25em; } 
+            }
+            
+            @media all and (max-width: 480px) {
+                
+                #horoj { font-size:5em; } 
+                #minutoj { font-size:3em; } 
+                #sekundoj { font-size:1.5em; } 
+                #tagxo { font-size:1.3em; } 
+                #dato { font-size:1em; } 
+                
+            }
         </style>
     </head>
     <body>
     	<div class="centro">
-	        <b style="font-size:7em;" id="horoj">HH</b> 
-            <span style="font-size:5em;" id="minutoj">MM</span>
-            <i style="font-size:2em;" id="sekundoj"></i>
+	        <b id="horoj"></b> 
+            <span id="minutoj"></span>
+            <i id="sekundoj"></i>
             <br />
-            <i style="font-size:1.5em;"  id="tagxo"></i>
-            <i style="font-size:1em;"  id="dato"></i>
+            <i id="tagxo"></i>
+            <i id="dato"></i>
     	</div>
     
     	<footer id="footer">
@@ -88,7 +139,7 @@
                 
                 //if(nhour==0){nhour=24;}
                 document.getElementById('horoj').innerHTML = nhour==0 ? 'Nul\'': numero_a_teksto(nhour);
-                document.getElementById('minutoj').innerHTML = numero_a_teksto(nmin);
+                document.getElementById('minutoj').innerHTML = nhour==0 ? 'horo': numero_a_teksto(nmin);
                 document.getElementById('sekundoj').innerHTML = numero_a_teksto(nsec)+(nsec > 1 ? ' sekundoj': nsec == 0 ? 'nul\' sekundoj' : ' sekundo');
                 document.getElementById('tagxo').innerHTML = capitalizeFirstLetter(tday[nday-1])+' '+ndate+'a';
                 document.getElementById('dato').innerHTML = tmonth[nmonth]+', '+nyear;
